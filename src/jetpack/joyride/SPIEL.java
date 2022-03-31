@@ -19,10 +19,13 @@ import javax.swing.Timer;
  
  
 public class SPIEL extends JPanel{
+    
+    private Missile testMissileOne;
+    private Missile testMissileTwo;
  
   public static final String IMAGE_DIR = "hintergrund/";
      
-  private final Dimension prefSize = new Dimension(1180, 1180);
+  private final Dimension prefSize = new Dimension(5000, 5000);
      
   private ImageIcon backgroundImage;
   private final String[] backgroundImages= new String [] {"index.jpg"};
@@ -65,6 +68,8 @@ public class SPIEL extends JPanel{
      
   private void createGameObjects() {
     // Spielobjekte erzeugen
+    testMissileOne = new Missile ( new Coordinate (200,100), 9, Math.toRadians (45), 5);
+    testMissileTwo = new Missile ( new Coordinate (200,609), 9, Math.toRadians (-45), 5);
   } 
      
   
@@ -103,6 +108,9 @@ public class SPIEL extends JPanel{
   private void doOnTick() {
       strecke++;
       if (strecke > 1000) endGame();
+      testMissileOne.makeMove();
+      testMissileTwo.makeMove();
+      if (testMissileOne.touches (testMissileTwo)) endGame ();
       repaint();
     
          
@@ -127,6 +135,10 @@ public class SPIEL extends JPanel{
        g.setColor(Color.RED);
        g.drawString("Spiel vorbei!", prefSize.width/2 - 130, prefSize.height/5);
     }
+    
+    testMissileOne.paintMe (g);
+    testMissileTwo.paintMe (g);
+    
   }
      
 }
